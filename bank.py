@@ -279,11 +279,10 @@ def display_customer_list():
         with open ("customer.txt", "r") as file:
             customers = file.readlines()
             for line in customers:
-                cus_id,name = line.strip().split(",")
-                customer_data =  cus_id,name
-                print("----Disply Customer List----")
-                if customer_data == (f"customer_data[0],customer_data[1]"):
-                    print("{customer_data[0]}:{customer_data[1]}")
+                cus_id,name,_ = line.strip().split(",")
+                customer_data =  cus_id,name,_
+                customer_data = (f"cus_id = customer_data[0],name = customer_data[1]")
+                print("{customer_data[0]}:{customer_data[1]}")
     except FileNotFoundError:
         print("File not found.")
             
