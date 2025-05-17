@@ -5,6 +5,7 @@ def get_customer_info():
         address = input("Enter your address: ")       
         username = input("Enter username: ")
         password = input("Enter password: ")
+            
         return [name, address, username, password]
        
 def save_customer(customer):
@@ -51,7 +52,13 @@ def user_login():
 def create_account():
     print("Create Bank Account")
     name = input("Enter your username: ")
-    password = input("Enter your password: ")
+    while True:
+        password = input("Enter your password: ")
+        if len(password) >= 6:
+            print("Password is ok.")
+        else:
+            print("Password must be at least 6 characters.")
+        return
     acc_number = input("Enter your account number: ")
     try:
         balance = float(input("Enter the initial balance: "))
@@ -244,14 +251,52 @@ def transfer(sender_acc, receiver_acc, amount):
     except IOError:
         print("Error occurred while accessing the file.")
 
+def change_password():
+    try:
+        updated_user = []
+        with open ("user.txt", "r") as file:
+            for line in file:
+                username,password = line.strip().split(",")
+                if username == username:
+                    current_password = input("Enter your current password: ")
+                    if current_password != password:
+                        print("Password not match.")
+                        return
+                    else:
+                        new_password = input("Enter your new_password (must be 6 characters): ")
+                        confirm_password = input("Enter your confirm_password: ")
+                        if new_password == confirm_password:
+                            print("Password changed successfully.")
+                            updated_user = f"{username},{new_password}\n"
+                            user.append(updated_user)
+        with open ("user.txt", "w") as file:
+            file.readlines(user)        
+    except IOError:                
+        print("User not found.") 
+
+def display_customer_list():
+    try:
+        with open ("customer.txt", "r") as file:
+            customers = file.readlines()
+            for line in customers:
+                cus_id,name = line.strip().split(",")
+                print("----Disply Customer List----")
+                customer_data = customer.line.strip().split(",")
+                if customer_data == (f"customer_data[0],customer_data[1]"):
+                    print("{customer_data[0]}:{customer_data[1]}")
+    except FileNotFoundError:
+        print("File not found.")
+            
 # Main user menu
 def user_registration():
     while True:
         print("\n---- Welcome to Mini Banking System ----")
         print("1. Register User")
         print("2. Login")
-        print("3. Exit")
-        choice = input("Enter your choice (1-3): ")
+        print("3. Display Customer List")
+        print("4. Change password")
+        print("5. Exit")
+        choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
             customer = get_customer_info()
@@ -306,8 +351,14 @@ def user_registration():
                         break
                     else:
                         print("Invalid option.")
-        
+
         elif choice == "3":
+            display_customer_list()
+
+        elif choice == "4":
+            change_password()
+        
+        elif choice == "5":
             print("Thank you for using Mini Banking System. Have a Nice Day.")
             break
         else:
