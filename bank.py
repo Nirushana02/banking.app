@@ -280,8 +280,8 @@ def display_customer_list():
             customers = file.readlines()
             for line in customers:
                 cus_id,name = line.strip().split(",")
+                customer_data =  cus_id,name
                 print("----Disply Customer List----")
-                customer_data = customer.line.strip().split(",")
                 if customer_data == (f"customer_data[0],customer_data[1]"):
                     print("{customer_data[0]}:{customer_data[1]}")
     except FileNotFoundError:
